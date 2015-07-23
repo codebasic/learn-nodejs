@@ -5,17 +5,12 @@ var person1 = {
   }
 }
 
-for(var property in person1){
-  console.log(property + ": " + person1[property]);
+for(var key in person1){
+  console.log(key + ": " + person1[key]);
 }
 
 // ECMAScript 5
-var properties = Object.keys(person1);
-console.log(properties);
-
-// 네이티브 메소드는 for-in 에 나타나지 않음.
-var nums = [1,2,3]
-console.log("push" in nums);
-for(var property in nums){
-  console.log(property);
-}
+var keys = Object.keys(person1);
+console.log(keys);
+// 네이티브 메소드는 반환되지 않음
+console.log("toString" in keys);

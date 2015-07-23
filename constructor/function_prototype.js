@@ -22,6 +22,10 @@ obj.toString = function(){
 
 console.log(obj.toString());
 
+// 그렇지만 Object.prototype.toString을 재정의한 것은 아님.
+var obj2 = {};
+console.log(obj2.toString());
+
 delete obj.toString;
 console.log(obj.toString());
 
