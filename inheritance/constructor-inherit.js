@@ -30,11 +30,12 @@ function Square(size){
   this.width = size;
 }
 
-/*
-Square.prototype = new Rectangle();
-Square.prototype.constructor = Square;
-*/
-inherit(Square, Rectangle);
+// 생성자 상속
+// Square.prototype = new Rectangle();
+// Square.prototype.constructor = Square;
+
+var util = require('util');
+util.inherits(Square, Rectangle);
 
 Square.prototype.toString = function(){
   return "[Square " + this.length + "x" + this.width + "]";
@@ -54,8 +55,8 @@ console.log(square instanceof Rectangle);
 console.log(square instanceof Object);
 
 // 생성자 상속
-function inherit(constructor, parent){
-  constructor.prototype = Object.create(parent.prototype, {
+function inherits(child, parent){
+  child.prototype = Object.create(parent.prototype, {
     constructor: {
       configurable: true,
       enumerable: true,

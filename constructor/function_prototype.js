@@ -10,10 +10,9 @@ console.log(book.hasOwnProperty("hasOwnProperty")); // false
 console.log(Object.prototype.hasOwnProperty("hasOwnProperty")); // true
 
 // isPrototypeOf()
-var object = {};
-console.log(Object.prototype.isPrototypeOf(object)); // true
+var obj = new Object();
+console.log(Object.prototype.isPrototypeOf(obj)); // true
 
-var obj = {};
 console.log(obj.toString()); // [object Object]
 
 obj.toString = function(){

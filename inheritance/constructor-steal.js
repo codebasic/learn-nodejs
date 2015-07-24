@@ -1,4 +1,4 @@
-var inherit = require('./inherit').inherit;
+var inherits = require('util').inherits;
 
 function Rectangle(length, width){
   this.length = length;
@@ -14,14 +14,18 @@ Rectangle.prototype.toString = function(){
 }
 
 function Square(size){
+  // Rectangle의 생성자 함수를 호출
   Rectangle.call(this, size, size);
 }
 
-inherit(Square, Rectangle);
+// Rectangle 프로토타입 상속
+inherits(Square, Rectangle);
 
 // Override super
 Square.prototype.toString = function(){
+  // 원래 함수의 메소드 호출해 결과 얻어오기
   var text = Rectangle.prototype.toString.call(this);
+  // 결과를 현재 함수에 맞게 조절하기
   return text.replace("Rectangle", "Square");
 }
 
