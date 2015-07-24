@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%=title%></h1>
+    <p>계정에 사진 업로드</p>
+
+    <form method='post' enctype='multipart/form-data'>
+      <p><input type='text', name='photo[name]',
+        placeholder='이름'></p>
+      <p><input type='file', name='photo[image]'></p>
+      <p><input type='submit' value='업로드'></p>
+    </form>
+  </body>
+</html>
