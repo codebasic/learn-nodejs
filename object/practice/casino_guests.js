@@ -1,3 +1,6 @@
+var assert = require('assert');
+var casino = require('./casino');
+
 var 손님1 = {
   이름: '이성주',
   객실번호: 101,
@@ -35,3 +38,10 @@ for(var i=0; i < 손님목록.length; i++){
 for(var i=0; i < 손님목록.length; i++){
   손님목록[i].showProfile();
 }
+
+// 환전
+console.log('환전하기');
+assert('환전' in casino);
+assert.equal(casino.환전({금액: 1, 통화:'USD'}, 'KRW'), 1100);
+assert.equal(casino.환전({금액: 1100, 통화: 'KRW'}, 'USD'), 1);
+assert.equal(casino.환전({금액: 1, 통화: 'CNY'}, 'KRW'), undefined);
