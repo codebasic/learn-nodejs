@@ -1,6 +1,11 @@
+var assert = require('assert');
+
 var x= 5;
-var y= 6;
-var z = x+y;
+
+assert(typeof x == 'number');
+
 x = '이성주';
-var p;
-console.log(x,y,z);
+assert(typeof x == 'string');
+
+function 아주유용한함수(){}
+assert(typeof 아주유용한함수 == 'function');
