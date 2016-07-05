@@ -1,30 +1,30 @@
-var person1 = {
-  name : '이성주',
-  twitter: '@LeeSeongjoo'
-};
+var assert = require('assert');
 
-person1.sayName = function(){
-  console.log(this.name);
+var person = {
+  이름: '이성주',
+  이메일: 'seongjoo@',
+  소개하기: function(){
+    소개문구 = this.이름 + ' <' + this.이메일 + '>';
+    console.log(소개문구);
+  }
 }
 
-console.log(Object.keys(person1));
+속성목록 = Object.keys(person);
+assert.deepEqual(속성목록, ['이름', '이메일', '소개하기']);
 
-Object.defineProperty(person1, "name", {
-  enumerable: false
-});
+Object.defineProperty(person, '이름', {enumerable: false});
+속성목록 = Object.keys(person);
+assert.deepEqual(속성목록, ['이메일', '소개하기']);
 
-console.log(Object.keys(person1));
-console.log(person1.propertyIsEnumerable("name"));
-
-Object.defineProperty(person1, "name", {
+Object.defineProperty(person, '이름', {
   configurable: false
 });
 
-delete person1.name; // 삭제되지 않음.
-console.log(person1.name);
+delete person.이름;
+assert('이름' in person);
+person.소개하기();
 
-// 오류! 다시 재설정할 수 없음.
-//configurable이 false인 것을 재설정하는 것은 논리적인 오류
-Object.defineProperty(person1, "name", {
-  configurable: true
-});
+// configurable이 false인 것을 재설정하면 TypeError 발생
+assert.throws(()=>Object.defineProperty(person, '이름', {
+   configurable: true
+}), 'TypeError');
