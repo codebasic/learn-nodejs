@@ -20,8 +20,10 @@ function makeCardDeck(){
   return 카드덱;
 }
 
-function rankToNum(계급){
-  var 매핑 = {'J': 11, 'Q': 12, 'K': 13, 'A':1};
+function rankToNum(계급, 매핑){
+  if(!매핑){
+      매핑 = {'J': 11, 'Q': 12, 'K': 13, 'A':1};
+  }
   var 숫자값 = 매핑[계급];
   // if(숫자값 == undefined){
   if(!숫자값){
@@ -40,3 +42,4 @@ function numToRank(숫자값){
 }
 
 module.exports.카드덱생성 = makeCardDeck;
+module.exports.rankToNum = rankToNum;
