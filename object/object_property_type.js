@@ -1,47 +1,40 @@
-var person1 = {
-  // data 속성
-  _name : '이성주',
-  _birthday : '01-01',
+var assert = require('assert');
 
-  // accessor 속성
-  get name(){
-    console.log("이름 읽기");
-    return this._name;
+var person = {
+  _이름: '이성주',
+
+  get 이름(){
+    return this._이름;
   },
 
-  set name(value){
-    console.log("이름 설정");
-    this._name = value;
+  _자본: 1000,
+
+  get 자본(){
+    return this._자본;
   },
 
-  get birthday(){
-    return this._birthday;
+  set 자본(value){
+    if(!(typeof value == 'number')){
+      throw new Error('자본의 값은 숫자만 가능합니다.');
+    }
+    this._자본 = value;
   }
+
 }
 
-console.log(person1.name);
-person1.name = '김성주';
+assert.throws(()=>person.자본 = '돈 없다;;', 'Error');
+person.자본 += 100;
+assert.equal(person.자본, 1100);
 
-// get만 지정되면 읽기 전용값이 됨.
-console.log(person1.birthday);
-person1.birthday = '12-27';
-console.log(person1.birthday);
+person.이름 = '김성주'
+assert.equal(person.이름, '이성주');
 
-// 하지만 완전히 숨기는 것은 아님
-person1._name = '이성주';
-console.log(person1.name);
-
-// 이미 생성된 객체에 Accessor 정의하기
-Object.defineProperty(person1, "twitter", {
-  get: function() {
-    var url = "http://www.twitter.com/"
-    return url+this._twitter;
+Object.defineProperty(person, '이메일', {
+  get: function(){
+    console.log(this.이름 + '<' + this._이메일 + '>');
+    return this._이메일;
   },
-  set: function(value){
-    console.log('트위터는 인생에 그다지 도움이 ...');
-    this._twitter = value;
-  }
+  set: function(value){this._이메일 = value}
 });
-
-person1.twitter = '@LeeSeongjoo';
-console.log(person1.twitter);
+person.이메일 = 'seongjoo@';
+person.이메일
