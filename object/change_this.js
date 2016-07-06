@@ -1,41 +1,26 @@
-function sayName(label){
-  console.log(label + ':' + this.name);
-}
+var assert = require('assert');
 
 var person1 = {
-  name : '일번'
+  이름: '이성주',
 };
 
 var person2 = {
-  name : '이번'
-};
-
-//sayName.call(this, "전역"); // node.js
-sayName.call(person1, "person1");
-sayName.call(person2, "person2");
-
-// apply
-function showProfile(label, sep){
-  console.log(label, sep, this.name);
+  이름: '김성주',
 }
 
-showProfile.apply(person1, ["person1", '=']);
-showProfile.apply(person2, ["person2", '=']);
-
-// bind: this에 대상 객체 참조를 고정
-var sayNameForPerson1 = sayName.bind(person1);
-sayNameForPerson1("person1");
-
-/*
-sayNameForPerson1 = function(label){
-  console.log(label, person1.name);
+function 소개하기(이메일, 전화번호){
+  console.log('안녕하세요, ' + this.이름 + '입니다.');
+  console.log('이메일: ' + 이메일);
+  console.log('전화번호: ' + 전화번호);
 }
-*/
 
-var sayNameForPerson2 = sayName.bind(person2);
-sayNameForPerson2("person2");
+소개하기.call(person1, 'seongjoo@', '1234');
+소개하기.call(person2, 'kim@', '5678');
 
-// 다른 객체의 메소드가 되어도, this값은 bind()에 연결된
-// 객체에 고정
-person2.sayName = sayNameForPerson1;
-person2.sayName("person2");
+소개하기.apply(person1, ['seongjoo@', '1234']);
+소개하기.apply(person2, ['kim@', '5678']);
+
+p1소개하기 = 소개하기.bind(person1);
+assert.equal(typeof p1소개하기, 'function');
+person2.소개하기 = p1소개하기
+person2.소개하기('kim@', '5678');
