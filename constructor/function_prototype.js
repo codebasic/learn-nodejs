@@ -1,33 +1,35 @@
+var assert = require('assert');
+
 var book = {
   title: '객체지향 자바스크립트',
   author: '이성주'
 }
 
-console.log("title" in book); // true
-console.log(book.hasOwnProperty("title")); // true
+assert('title' in book);
+assert(book.hasOwnProperty('title'));
+assert.deepEqual(Object.keys(book), ['title', 'author']);
 
-console.log(book.hasOwnProperty("hasOwnProperty")); // false
-console.log(Object.prototype.hasOwnProperty("hasOwnProperty")); // true
+assert('hasOwnProperty' in book);
+assert.equal(book.hasOwnProperty('hasOwnProperty'), false);
 
-// isPrototypeOf()
-var obj = new Object();
-console.log(Object.prototype.isPrototypeOf(obj)); // true
+assert(book instanceof Object);
+assert.equal(typeof book, 'object');
+assert.equal(typeof Object, 'function');
+assert.equal(book.constructor, Object);
 
-console.log(obj.toString()); // [object Object]
+assert('toString' in book);
+assert.equal(book.hasOwnProperty('toString'), false);
+assert.equal(Object.prototype.hasOwnProperty('toString'), true);
 
-obj.toString = function(){
-  return "[객체]";
+book.toString = function(){
+  return this.title + ', ' + this.author;
 }
 
-console.log(obj.toString());
+console.log(book.toString());
 
-// 그렇지만 Object.prototype.toString을 재정의한 것은 아님.
-var obj2 = {};
-console.log(obj2.toString());
+var book2 = {
+  title: 'Node.js',
+  author: '이성주'
+};
 
-delete obj.toString;
-console.log(obj.toString());
-
-// prototype은 인스턴스 객체에서 접근 불가.
-delete obj.toString;
-console.log(obj.toString());
+console.log(book2.toString());
