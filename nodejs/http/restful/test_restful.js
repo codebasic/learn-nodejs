@@ -12,8 +12,12 @@ function handleBadStatus(statusCode){
 }
 
 if(command == 'POST'){
-  var item = querystring.escape(process.argv[3]);
-  request.post(url, item, function(err, res, body){
+  request.post({
+    url: url,
+    method: 'POST',
+    body: process.argv[3]
+  },
+    function(err, res, body){
     handleBadStatus(res.statusCode);
     console.log(body);
   });
