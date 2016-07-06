@@ -1,7 +1,4 @@
 var request = require('request');
-var querystring = require('querystring');
-
-var command = process.argv[2];
 
 var url = 'http://localhost:3000';
 
@@ -11,25 +8,34 @@ function handleBadStatus(statusCode){
   }
 }
 
-if(command == 'POST'){
-  var body = process.argv[3];
-  request.post({
-    url: url,
-    method: 'POST',
-    headers:{
-      'Content-Type': 'text/plain;charset=utf-8',
-      'Content-Length': Buffer.byteLength(body)
+var execute_command = {
+  'POST': ()=>{
+    var body = process.argv[3];
+    request.post({
+      url: url,
+      method: 'POST',
+      headers:{
+        'Content-Type': 'text/plain;charset=utf-8',
+        'Content-Length': Buffer.byteLength(body)
+      },
+      body: body
     },
-    body: body
+      function(err, res, body){
+      handleBadStatus(res.statusCode);
+      console.log(body);
+    });
   },
-    function(err, res, body){
-    handleBadStatus(res.statusCode);
-    console.log(body);
-  });
+  'GET': ()=>{
+    request.get(url, function(err, res, body){
+      handleBadStatus(res.statusCode);
+      console.log(body);
+    });
+  }
 }
-else if(command == 'GET'){
-  request.get(url, function(err, res, body){
-    handleBadStatus(res.statusCode);
-    console.log(body);
-  });
+
+var command = process.argv[2];
+if(!(command in execute_command)){
+  console.error(command + ' is not a valid request');
+  process.exit(1);
 }
+execute_command[command]();
