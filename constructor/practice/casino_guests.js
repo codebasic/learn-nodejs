@@ -9,8 +9,7 @@ var 손님목록 = [
 
 손님목록.forEach(function(손님){
   console.log(손님.이름);
-  얼마 = 손님.자본
-  console.log(얼마);
+  console.log(손님.자본);
 
   assert.throws(()=>{손님.자본 = 1000}, 'Error');
 });
