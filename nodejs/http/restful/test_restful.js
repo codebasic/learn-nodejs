@@ -12,10 +12,15 @@ function handleBadStatus(statusCode){
 }
 
 if(command == 'POST'){
+  var body = process.argv[3];
   request.post({
     url: url,
     method: 'POST',
-    body: process.argv[3]
+    headers:{
+      'Content-Type': 'text/plain;charset=utf-8',
+      'Content-Length': Buffer.byteLength(body)
+    },
+    body: body
   },
     function(err, res, body){
     handleBadStatus(res.statusCode);
