@@ -35,6 +35,9 @@ var server = http.createServer(function(req, res){
     case 'DELETE':
       deleteItem(req, res);
       break;
+    case 'PUT':
+      updateItem(req, res);
+      break;
   }
 });
 
@@ -55,6 +58,35 @@ function deleteItem(req, res){
     items.splice(i, 1); // i 번째 인덱스부터 1개 값 삭제
     res.end('OK\n');
   }
+}
+
+function updateItem(req, res){
+  var path = url.parse(req.url).pathname;
+  var i = parseInt(path.slice(1)); // 문자열을 정수 값으로 변환
+  debugger;
+  
+  if(isNaN(i)){
+    // i가 숫자가 아닌 경우는 오류
+    res.statusCode = 400;
+    res.end('유효하지 않은 아이템 식별자');
+  } else if(!items[i]){
+    // i 번에 해당하는 아이템이 없는 경우
+    res.statusCode = 404; // 리소스를 못 찾는 경우
+    res.end('해당 아이템 없음.');
+  }
+  else{
+    var item = '';
+
+    req.setEncoding('utf-8');
+    req.on('data', function(chunk){
+      item += chunk;
+    });
+    req.on('end', function(){
+      items[i] = item;
+      res.end('OK\n');
+    });
+  }
+
 }
 
 server.listen(3000);
