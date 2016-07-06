@@ -1,44 +1,39 @@
-// preventExtensions
-console.log('\n--- Object.preventExtensions ---')
+var assert = require('assert');
+
 var person = {
-  name : '이성주'
-}
-
-// 기본적으로는 새로운 속성을 추가 (extend)할 수 있다.
-console.log(Object.isExtensible(person));
-// 속성 추가 방지
-Object.preventExtensions(person);
-
-// 속성 추가 시도. 오류는 나지 않지만, 추가되지는 않음.
-person.twitter = '@LeeSeongjoo';
-console.log(Object.isExtensible(person));
-console.log(person.twitter);
-
-// seal - 기존의 값만 읽기 쓰기 가능
-console.log('\n--- Object.seal ---')
-var person1 = {
-  name: '이성주'
+  이름: '이성주'
 };
 
-console.log(Object.isExtensible(person1));
-console.log(Object.isSealed(person1));
+person.이메일 = 'seongjoo@codebasic.co';
+assert('이메일' in person);
+assert(Object.isExtensible(person));
 
-Object.seal(person1);
+Object.preventExtensions(person);
+person.전화번호 = '010-1234-5678';
+assert.equal('전화번호' in person, false);
 
-console.log(Object.isExtensible(person1));
-console.log(Object.isSealed(person1));
+// 추가는 막지만 삭제까지 막지는 않는다.
+delete person.이메일;
+assert.equal('이메일' in person, false);
 
-person1.name = 'SJ';
-person1.twitter = '@LeeSeongjoo';
+var person = {이름: '이성주'};
+Object.seal(person);
 
-console.log(person1.name, person1.twitter);
+person.이름 = '김성주';
+assert.equal(person.이름, '김성주');
+delete person.이름;
+assert('이름' in person); // 삭제되지 않음.
 
-// freeze - 읽기 전용
-console.log('\n--- Object.freeze ---')
-var person = {
-  name: '이성주'
-}
+person.이메일 = 'kim@';
+assert.equal('이메일' in person, false); // 추가되지 않음.
 
+var person = {이름: '이성주'};
 Object.freeze(person);
-person.name = 'SJ';
-console.log(person.name);
+
+person.이름 = '김성주';
+assert.equal(person.이름, '이성주'); // 변경되지 않음.
+delete person.이름;
+assert('이름' in person); // 삭제되지 않음
+
+person.이메일 = 'seongjoo@';
+assert('이메일' in person); // 추가되지 않음
