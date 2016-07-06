@@ -1,43 +1,29 @@
-function Person(){
-  // 빈 객체
-}
+var assert = require('assert');
 
-function Alien(){
-  // 빈 객체
-}
-
-var person1 = new Person();
-var person2 = new Person();
-
-console.log(person1 instanceof Person);
-console.log(person2 instanceof Person);
-
-console.log(person1.constructor == Person);
-console.log(person2.constructor == Person);
-
-// instanceof 사용 권장
-// constructor 속성은 임의에 바뀔 수 있음
-person1.constructor = Alien;
-console.log(person1.constructor == Person); // false
-console.log(person1 instanceof Person); // true
-
-
-// this
-function Person(name){
-  this.name = name;
-  this.sayName = function(){
-    console.log(this.name);
+function Person(이름, 이메일){
+  if(this instanceof Person){
+    this.이름 = 이름;
+    this.이메일 = 이메일;
+    this.소개하기 = function(){
+      console.log(this.이름 + '입니다.');
+    }
   }
-
-  return 'new 키워드로 생성하셔야죠.';
+  else{
+    // new 키워드를 사용하지 않은 경우
+    return new Person(이름, 이메일);
+  }
 }
 
-var person1 = new Person('이성주');
-var person2 = new Person('김성주');
+var 사람들 = []
+사람들.push(new Person('이성주', 'lee@'));
+사람들.push(new Person('김성주', 'kim@'));
 
-person1.sayName();
-person2.sayName();
+사람들.forEach(function(사람){
+  assert(사람 instanceof Person);
+  assert.equal(사람.constructor, Person);
+  사람.소개하기();
+});
 
-// new 키워드의 역할
-var wrongPerson = Person('이성주');
-console.log(wrongPerson);
+이상한사람 = Person('홍길동', 'hong@');
+assert(이상한사람 instanceof Person);
+이상한사람.소개하기();
