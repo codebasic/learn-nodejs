@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var qs = require('querystring');
 
+var formidable = require('formidable');
+
 var items = []; // 인메모리 "DB"
 
 function 항목추가(req, res){
@@ -43,6 +45,31 @@ function badRequest(req, res){
   res.end('잘못된 요청: ' + req.method);
 }
 
+function 업로드처리(req, res){
+  // multipart/form-data인지 확인
+  var enctype = req.headers['content-type'] || '';
+  if(enctype.indexOf('multipart/form-data') == -1){
+    // 제대로 된 업로드가 아니다!
+    res.statusCode = 400;
+    res.end('Bad request: expects multipart/form-data');
+    return;
+  }
+
+  // form 데이터 처리
+  var form = new formidable.IncomingForm();
+  form.parse(req);
+
+  form.on('file', function(name, file){
+    console.log(name);
+    console.log(file);
+  });
+
+  form.on('end', function(){
+    res.end('upload completed!');
+  });
+
+}
+
 var server = http.createServer(function(req, res){
   if('/' == req.url){
     var 요청처리 = {
@@ -59,7 +86,9 @@ var server = http.createServer(function(req, res){
       badRequest(req, res);
     }
     요청처리[req.method]();
-  } else{
+  } else if('/upload' == req.url){
+    업로드처리(req, res);
+  }else{
     // 기타 경로로 요청이 들어온 경우
     notFound(res);
   }
