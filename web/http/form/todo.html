@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>할일목록</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h1>할일목록</h1>
+    <ul>%</ul>
+
+    <form method="post" action="/">
+      <p><input type="text" name="item" placeholder="할일 입력"></p>
+      <p><input type="submit" value="추가"></p>
+    </form>
+
+    <h1>파일 업로드</h1>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+      <p><input type="file" name="attachment"></p>
+      <p><input type="submit" value="upload"></p>
+    </form>
+
+  </body>
+</html>

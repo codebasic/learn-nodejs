@@ -9,14 +9,6 @@ function checkResponse(res){
   }
 }
 
-function checkItemIndex(item_index){
-  if(isNaN(parseInt(item_index))){
-    console.error(item_index + '는 유효한 색인 번호가 아닙니다.');
-    process.exit(1);
-  }
-  return item_index;
-}
-
 function formatPostRequest(url, content){
   return ;
 }
@@ -44,18 +36,22 @@ var execute_command = {
     });
   },
   'DELETE':()=>{
-    var item_index = checkItemIndex(process.argv[3]);
+    var item_index = process.argv[3];
 
     request.delete(url + '/' + item_index, function(err, res, body){
+      if(err){
+        console.log(err);
+        return;
+      }
       checkResponse(res);
       console.log(body);
     });
   },
   'PUT':()=>{
-    var item_index = checkItemIndex(process.argv[3]);
+    var item_index = process.argv[3];
     var content = process.argv[4];
     request({
-      url: url + '/' + item_index, 
+      url: url + '/' + item_index,
       method: 'PUT',
       headers:{
         'Content-Type': 'text/plain;charset=utf-8',

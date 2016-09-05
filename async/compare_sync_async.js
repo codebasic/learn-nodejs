@@ -9,6 +9,8 @@ describe('Compare Sync and Async', function(){
   beforeEach('초기화', function(){
     timestamp = new Date().toString();
     contents = undefined;
+    fs.stat(filename, (err, stats)=> {if(!err) fs.unlinkSync(filename)});
+    ;
   });
 
   it('동기 방식으로 파일 입출력을 수행해야 한다.', function(){
@@ -42,7 +44,7 @@ describe('Compare Sync and Async', function(){
       contents = data;
     });
 
-    assert(timestamp == contents);
+    assert.notEqual(contents, timestamp);
     done();
   });
 });
