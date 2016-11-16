@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  if user
+    p 안녕하세요, #[a(href="mailto: " + user.email) #{user.name}] 님!
+    form(method='post' action='/users/logout')
+      p: input(type='submit' value='로그아웃')
+  else
+    div
+      h2 가입
+      include register

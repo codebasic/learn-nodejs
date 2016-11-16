@@ -1,0 +1,6 @@
+form#register(method='post' action='/users/register')
+  p: input(type='text' name='name' placeholder="이름" required)
+  p: input(type='email' name='email' placeholder="username@email.com")
+  p: input(type='password' name='password' placeholder="비밀번호")
+  p: input(type='password' name='password_confirm' placeholder="비밀번호 확인")
+  p: input(type='submit' value='가입')
