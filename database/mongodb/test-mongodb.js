@@ -1,3 +1,5 @@
+/*jshint node: true, mocha: true, esversion: 6 */
+'use strict';
 const assert = require('assert');
 
 describe('MongoDB', function(){
